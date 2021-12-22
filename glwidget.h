@@ -49,7 +49,7 @@ private:
     QTimer* timerCal = nullptr;
 
     Camera camera;
-    Cutter cutter = Cutter(100.0f, QVector3D(0, 0, 0));
+    Cutter cutter = Cutter(100.0f, 50.0f, QVector3D(0, 0, 0));
     ZMap zmap;
 
     void updateZMap(void);
