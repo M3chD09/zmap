@@ -166,9 +166,9 @@ void ZMap::calRightTrangles(void)
     rightNormals.reserve(verticesCount);
 
     for (unsigned int i(1); i < row; i++) {
-        a = QVector3D(row - 1, heights.at(i - 1).front(), i - 1);
+        a = QVector3D(row - 1, heights.at(i - 1).back(), i - 1);
         b = QVector3D(row - 1, 0, i - 1);
-        c = QVector3D(row - 1, heights.at(i).front(), i);
+        c = QVector3D(row - 1, heights.at(i).back(), i);
         d = QVector3D(row - 1, 0, i);
 
         rightVertices.append({ unify(a), unify(b), unify(c), unify(c), unify(b), unify(d) });
