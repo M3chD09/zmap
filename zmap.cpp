@@ -11,27 +11,6 @@ void ZMap::init()
 {
     heights.clear();
     heights.resize(1000, std::vector<float>(1000, 500.0f));
-
-    for (int i(300); i <= 700; i++) {
-        for (int j(300); j <= 700; j++) {
-            if (std::pow(i - 500, 2) + std::pow(j - 500, 2) <= std::pow(200, 2)) {
-                heights[i][j] = 700.0f;
-            }
-        }
-    }
-
-    for (int i(0); i < 1000; i++) {
-        for (int j(0); j < 100; j++) {
-            heights[i][j] = 400.0f + j;
-            heights[i][j + 900] = 500.0f - j;
-        }
-    }
-
-    for (int i(900); i < 1000; i++) {
-        for (int j(0); j < 1000; j++) {
-            heights[i][j] = 400.0f;
-        }
-    }
 }
 
 unsigned int ZMap::tranglesCount(void)

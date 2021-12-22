@@ -23,13 +23,7 @@ GLWidget::~GLWidget()
 
 void GLWidget::updateZMap()
 {
-    QVector3D l = cutter.location;
-    l.setX(l.x() - 10);
-    l.setY(l.y() - 12);
-    cutter.moveLine(l, zmap);
-
-    if (cutter.location.y() < 0) {
-
+    if (!cutter.start(zmap)) {
         timerUpdate->stop();
         timerCal->stop();
         return;
@@ -62,7 +56,12 @@ void GLWidget::initializeGL()
     program->setUniformValue("lightColor", lightColor);
     program->setUniformValue("lightPos", lightPos);
 
-    cutter.location = QVector3D(1100, 1200, 400);
+    cutter.location = QVector3D(1100, 600, 400);
+    cutter.locations.push(QVector3D(100, 600, 400));
+    cutter.locations.push(QVector3D(800, 100, 400));
+    cutter.locations.push(QVector3D(500, 900, 400));
+    cutter.locations.push(QVector3D(200, 100, 400));
+    cutter.locations.push(QVector3D(900, 600, 400));
 
     zmap.calAllTrangles();
     unsigned int verticesSize = (unsigned int)zmap.allVertices.count() * 3 * sizeof(float);
