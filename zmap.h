@@ -10,6 +10,7 @@ class ZMap {
 public:
     ZMap();
 
+    float height = 500.f;
     std::vector<std::vector<float>> heights;
 
     QList<QVector3D> allVertices;

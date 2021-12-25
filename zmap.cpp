@@ -10,7 +10,7 @@ ZMap::ZMap()
 void ZMap::init()
 {
     heights.clear();
-    heights.resize(1000, std::vector<float>(1000, 500.0f));
+    heights.resize(1000, std::vector<float>(1000, height));
 }
 
 unsigned int ZMap::tranglesCount(void)
@@ -21,8 +21,8 @@ unsigned int ZMap::tranglesCount(void)
 QVector3D ZMap::unify(QVector3D& value)
 {
     float row = (float)heights.size(), col = (float)(heights.at(0).size());
-    float scale = ((float)heights.size() + (float)heights.at(0).size()) / 2.0f;
-    return (value - QVector3D(col / 2.0f, 0, row / 2.0f)) / scale;
+    float scale = (row + col) / 2.0f;
+    return (value - QVector3D(col / 2.0f, height / 2.0f, row / 2.0f)) / scale;
 }
 
 void ZMap::calTopTrangles(void)
@@ -91,7 +91,7 @@ void ZMap::calBackTrangles(void)
 
 void ZMap::calFrontTrangles(void)
 {
-    unsigned int col = (unsigned int)(heights.at(0).size());
+    unsigned int row = (unsigned int)heights.size(), col = (unsigned int)(heights.at(0).size());
     unsigned int verticesCount = 2 * (col - 1);
     QVector3D a, b, c, d, n = QVector3D(0, 0, 1.0f);
 
@@ -101,10 +101,10 @@ void ZMap::calFrontTrangles(void)
     frontNormals.reserve(verticesCount);
 
     for (unsigned int j(1); j < col; j++) {
-        a = QVector3D(j - 1, 0, col - 1);
-        b = QVector3D(j - 1, heights.back().at(j - 1), col - 1);
-        c = QVector3D(j, 0, col - 1);
-        d = QVector3D(j, heights.back().at(j), col - 1);
+        a = QVector3D(j - 1, 0, row - 1);
+        b = QVector3D(j - 1, heights.back().at(j - 1), row - 1);
+        c = QVector3D(j, 0, row - 1);
+        d = QVector3D(j, heights.back().at(j), row - 1);
 
         frontVertices.append({ unify(a), unify(b), unify(c), unify(c), unify(b), unify(d) });
         frontNormals.append({ n, n, n, n, n, n });
@@ -135,7 +135,7 @@ void ZMap::calLeftTrangles(void)
 
 void ZMap::calRightTrangles(void)
 {
-    unsigned int row = (unsigned int)heights.size();
+    unsigned int row = (unsigned int)heights.size(), col = (unsigned int)(heights.at(0).size());
     unsigned int verticesCount = 2 * (row - 1);
     QVector3D a, b, c, d, n = QVector3D(1.0f, 0, 0);
 
@@ -145,10 +145,10 @@ void ZMap::calRightTrangles(void)
     rightNormals.reserve(verticesCount);
 
     for (unsigned int i(1); i < row; i++) {
-        a = QVector3D(row - 1, heights.at(i - 1).back(), i - 1);
-        b = QVector3D(row - 1, 0, i - 1);
-        c = QVector3D(row - 1, heights.at(i).back(), i);
-        d = QVector3D(row - 1, 0, i);
+        a = QVector3D(col - 1, heights.at(i - 1).back(), i - 1);
+        b = QVector3D(col - 1, 0, i - 1);
+        c = QVector3D(col - 1, heights.at(i).back(), i);
+        d = QVector3D(col - 1, 0, i);
 
         rightVertices.append({ unify(a), unify(b), unify(c), unify(c), unify(b), unify(d) });
         rightNormals.append({ n, n, n, n, n, n });
